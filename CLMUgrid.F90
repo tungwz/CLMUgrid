@@ -651,7 +651,8 @@ PROGRAM clmu2grid
          ur_rgid(j,i) = urrgid(jo,io)
          ur_clss(j,i) = urclss(jo,io)
 
-         uxid = ur_rgid(j,i)
+         !bug: fortran数组应该从1开始
+         uxid = ur_rgid(j,i)+1
          uyid = ur_clss(j,i)
 
          ! 
@@ -671,10 +672,12 @@ PROGRAM clmu2grid
             ht_rf    (j,i,k) = htrf    (k,uxid)
             w_hc     (j,i,k) = whc     (k,uxid)
 
-            alb_rf  (j,i,k,:,:) = albrf  (k,uxid,:,:)
-            alb_wl  (j,i,k,:,:) = albwl  (k,uxid,:,:)
-            alb_imrd(j,i,k,:,:) = albimrd(k,uxid,:,:)
-            alb_perd(j,i,k,:,:) = albperd(k,uxid,:,:)
+            DO m = 1, 2
+               alb_rf  (j,i,k,m,:) = albrf  (k,uxid,m,:)
+               alb_wl  (j,i,k,m,:) = albwl  (k,uxid,m,:)
+               alb_imrd(j,i,k,m,:) = albimrd(k,uxid,m,:)
+               alb_perd(j,i,k,m,:) = albperd(k,uxid,m,:)
+            ENDDO
          
             tk_rf  (j,i,k,:) = tkrf  (k,uxid,:)
             tk_wl  (j,i,k,:) = tkwl  (k,uxid,:)
