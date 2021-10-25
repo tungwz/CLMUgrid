@@ -1,4 +1,4 @@
-Program clmu2grid
+PROGRAM clmu2grid
 
    use netcdf
 
@@ -610,7 +610,7 @@ Program clmu2grid
             em_rf    (j,i,k) = emrf    (k,uxid)
             em_wl    (j,i,k) = emwl    (k,uxid)
             em_imrd  (j,i,k) = emimrd  (k,uxid)
-            em_perd  (j,i,k) = emperd  (uyid,uxid)
+            em_perd  (j,i,k) = emperd  (k,uxid)
             ulev_imrd(j,i,k) = ulevimrd(k,uxid)
             th_rf    (j,i,k) = thrf    (k,uxid)
             th_wl    (j,i,k) = thwl    (k,uxid)
@@ -736,7 +736,7 @@ Program clmu2grid
    UL3D = (/ lon_dimid, lat_dimid, mon_dimid /)
    CALL check( nf90_def_var(ncid, "urban_lai", NF90_FLOAT, UL3D, ur_laivid ) )
 
-   XY5D = (/ lon_dimid, lat_dimid, den_dimid, ns_dimid, nr_dimid /)
+   XY5D = (/ lon_dimid, lat_dimid, den_dimid, nr_dimid, ns_dimid /)
    CALL check( nf90_def_var(ncid, "ALB_ROOF"   , NF90_FLOAT, XY5D, alb_rfvid   ) )
    CALL check( nf90_def_var(ncid, "ALB_WALL"   , NF90_FLOAT, XY5D, alb_wlvid   ) )
    CALL check( nf90_def_var(ncid, "ALB_IMPROAD", NF90_FLOAT, XY5D, alb_imrdvid ) )
@@ -965,7 +965,7 @@ Program clmu2grid
    CALL check( nf90_put_var(ncid,alb_imrdvid,alb_imrd          ) )
 
    CALL check( nf90_inq_varid(ncid, "ALB_PERROAD",alb_perdvid  ) )
-   CALL check( nf90_put_var(ncid,alb_perdvid,alb_perdvid       ) )
+   CALL check( nf90_put_var(ncid,alb_perdvid,alb_perd          ) )
 
    CALL check( nf90_close(ncid) )
    print*, "*** SUCCESS write surface file ***"
